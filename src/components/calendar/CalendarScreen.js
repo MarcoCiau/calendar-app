@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import { Calendar, momentLocalizer } from "react-big-calendar";
 import moment from "moment";
 import { Navbar } from "../ui/Navbar";
@@ -45,6 +45,24 @@ const myEventsList = [
 ];
 
 export const CalendarScreen = () => {
+  const [lastView, setLastView] = useState(
+    localStorage.getItem("lastView") || "week"
+  );
+
+  /* Handling Events */
+
+  const onDoubleClickEventHandler = (e) => {
+    console.log(e);
+  };
+
+  const onSelectEventHandler = (e) => {
+    console.log(e);
+  };
+
+  const onViewChangeHandler = (e) => {
+    localStorage.setItem("lastView", e);
+    setLastView(e);
+  };
   /* Return style for that event */
   const eventStyleGetter = (event, start, end, isSelected) => {
     console.log(event, start, end, isSelected);
@@ -74,6 +92,10 @@ export const CalendarScreen = () => {
         components={{
           event: CalendarEvent,
         }}
+        view={lastView}
+        onDoubleClickEvent={onDoubleClickEventHandler}
+        onSelectEvent={onSelectEventHandler}
+        onView={onViewChangeHandler}
       />
     </div>
   );
