@@ -1,10 +1,13 @@
 import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import Modal from "react-modal";
 import DateTimePicker from "react-datetime-picker";
 import moment from "moment";
 import Swal from "sweetalert2";
+import { closeModalAction } from "../../actions/actions";
 import { isAValidEndDate, validateTitle } from "../../utils/event-form-validator";
 import "./CalendarModal.css";
+
 
 const customStyles = {
   content: {
@@ -27,6 +30,11 @@ export const CalendarModal = () => {
   const [startDate, setStartDate] = useState(defaultStartDate.toDate());
   const [endDate, setEndDate] = useState(defaultEndDate.toDate());
   const [isAValidTitle, setIsAValidTitle] = useState(true);
+  /* Redux State Management */
+  const dispatch = useDispatch();//get redux-dispatch function
+  const modalOpen = useSelector((state) => state.ui.modalOpen);//get app state from redux's store
+  
+
   /* Default Form Values */
   const [formValues, setFormValues] = useState({
     title: "Evento",
@@ -66,16 +74,8 @@ export const CalendarModal = () => {
     closeModal();
   };
 
-  function openModal() {
-    // setIsOpen(true);
-  }
-  function afterOpenModal() {
-    // references are now sync'd and can be accessed.
-    // subtitle.style.color = "#f00";
-  }
-
   function closeModal() {
-    // setIsOpen(false);
+    dispatch(closeModalAction);
   }
 
   const onChangeStartDate = (e) => {
@@ -98,9 +98,8 @@ export const CalendarModal = () => {
     <div>
       {/* <button onClick={openModal}>Open Modal</button> */}
       <Modal
-        isOpen={true}
-        // onAfterOpen={afterOpenModal}
-        // onRequestClose={closeModal}
+        isOpen={modalOpen}
+        onRequestClose={closeModal}
         style={customStyles}
         closeTimeoutMS={200}
         contentLabel="Example Modal"

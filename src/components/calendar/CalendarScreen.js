@@ -1,11 +1,12 @@
 import React, {useState} from "react";
-import { Calendar, momentLocalizer } from "react-big-calendar";
+import { useDispatch } from "react-redux";
 import moment from "moment";
-import { Navbar } from "../ui/Navbar";
-import { messages } from "../../utils/calendar-messages-es";
+import { Calendar, momentLocalizer } from "react-big-calendar";
 import { CalendarEvent } from "./CalendarEvent";
 import { CalendarModal } from "./CalendarModal";
-
+import { Navbar } from "../ui/Navbar";
+import { messages } from "../../utils/calendar-messages-es";
+import { openModalAction } from "../../actions/actions";
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import "moment/locale/es";
 import "./CalendarScreen.css";
@@ -49,11 +50,12 @@ export const CalendarScreen = () => {
   const [lastView, setLastView] = useState(
     localStorage.getItem("lastView") || "week"
   );
+  const dispatch = useDispatch();//get redux-dispatch function
 
   /* Handling Events */
 
   const onDoubleClickEventHandler = (e) => {
-    console.log(e);
+    dispatch(openModalAction);
   };
 
   const onSelectEventHandler = (e) => {
