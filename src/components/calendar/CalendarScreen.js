@@ -6,7 +6,7 @@ import { CalendarEvent } from "./CalendarEvent";
 import { CalendarModal } from "./CalendarModal";
 import { Navbar } from "../ui/Navbar";
 import { messages } from "../../utils/calendar-messages-es";
-import { openModalAction } from "../../actions/actions";
+import { openModalAction, selectEventAction } from "../../actions/actions";
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import "moment/locale/es";
 import "./CalendarScreen.css";
@@ -59,7 +59,7 @@ export const CalendarScreen = () => {
   };
 
   const onSelectEventHandler = (e) => {
-    console.log(e);
+    dispatch(selectEventAction(e));
   };
 
   const onViewChangeHandler = (e) => {
