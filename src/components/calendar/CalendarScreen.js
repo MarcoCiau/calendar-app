@@ -5,6 +5,7 @@ import { Calendar, momentLocalizer } from "react-big-calendar";
 import { CalendarEvent } from "./CalendarEvent";
 import { CalendarModal } from "./CalendarModal";
 import { Navbar } from "../ui/Navbar";
+import { FloatingBtn } from "../ui/FloatingBtn";
 import { messages } from "../../utils/calendar-messages-es";
 import { openModalAction, selectEventAction } from "../../actions/actions";
 import "react-big-calendar/lib/css/react-big-calendar.css";
@@ -66,6 +67,11 @@ export const CalendarScreen = () => {
     localStorage.setItem("lastView", e);
     setLastView(e);
   };
+
+  const onAddNewEventHandler = (e) => {
+    dispatch(openModalAction);
+  }
+  
   /* Return style for that event */
   const eventStyleGetter = (event, start, end, isSelected) => {
     console.log(event, start, end, isSelected);
@@ -82,6 +88,7 @@ export const CalendarScreen = () => {
   };
   return (
     <div>
+      <FloatingBtn clickHandler={onAddNewEventHandler}/>
       <Navbar />
 
       <Calendar
@@ -100,7 +107,7 @@ export const CalendarScreen = () => {
         onSelectEvent={onSelectEventHandler}
         onView={onViewChangeHandler}
       />
-
+      
       <CalendarModal />
     </div>
   );
