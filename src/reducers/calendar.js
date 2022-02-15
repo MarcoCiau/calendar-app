@@ -14,6 +14,17 @@ const initialState = {
         name: "marco",
       },
     },
+    {
+      title: "Learn English",
+      start: moment().add(9, "hours").toDate(),
+      end: moment().add(10, "hours").toDate(),
+      allDay: false,
+      resource: false,
+      user: {
+        id: "oandnbf56s0jk498685jhn",
+        name: "user1",
+      },
+    },
   ],
   selected: null,
 };
@@ -26,7 +37,13 @@ export const calendarReducer = (state = initialState, action) => {
         selected: action.payload,
       };
     case actionTypes.eventAddNew:
-      return null;
+      return {
+        ...state,
+        events: [
+          ...state.events,
+          action.payload
+        ]
+      }
     default:
       return state;
   }

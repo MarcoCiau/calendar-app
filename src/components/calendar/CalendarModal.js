@@ -4,10 +4,12 @@ import Modal from "react-modal";
 import DateTimePicker from "react-datetime-picker";
 import moment from "moment";
 import Swal from "sweetalert2";
-import { closeModalAction } from "../../actions/actions";
-import { isAValidEndDate, validateTitle } from "../../utils/event-form-validator";
+import { addNewEventAction, closeModalAction } from "../../actions/actions";
+import {
+  isAValidEndDate,
+  validateTitle,
+} from "../../utils/event-form-validator";
 import "./CalendarModal.css";
-
 
 const customStyles = {
   content: {
@@ -31,9 +33,8 @@ export const CalendarModal = () => {
   const [endDate, setEndDate] = useState(defaultEndDate.toDate());
   const [isAValidTitle, setIsAValidTitle] = useState(true);
   /* Redux State Management */
-  const dispatch = useDispatch();//get redux-dispatch function
-  const modalOpen = useSelector((state) => state.ui.modalOpen);//get app state from redux's store
-  
+  const dispatch = useDispatch(); //get redux-dispatch function
+  const modalOpen = useSelector((state) => state.ui.modalOpen); //get app state from redux's store
 
   /* Default Form Values */
   const [formValues, setFormValues] = useState({
@@ -56,20 +57,36 @@ export const CalendarModal = () => {
   const formSubmitHandler = (e) => {
     e.preventDefault();
     console.log(formValues);
-    if (!isAValidEndDate(start, end))
-    {
+    if (!isAValidEndDate(start, end)) {
       return Swal.fire({
-        icon: 'error',
-        title: 'Oops...',
-        text: 'La fecha y hora fin debe de ser mayor a la fecha y hora de inicio!'
+        icon: "error",
+        title: "Oops...",
+        text: "La fecha y hora fin debe de ser mayor a la fecha y hora de inicio!",
       });
     }
 
-    if (!validateTitle(title))
-    {
+    if (!validateTitle(title)) {
       return setIsAValidTitle(false);
     }
-    /* TODO : SAVE DATA TO DB*/
+
+    dispatch(
+      addNewEventAction({
+        ...formValues,
+        id: new Date(),
+        user: {
+          id: "oandnbf56s0jk498685jhn",
+          name: "user1",
+        },
+      })
+    );
+
+    setFormValues({
+      title: "Evento",
+      notes: "",
+      start: startDate,
+      end: endDate,
+    });
+
     setIsAValidTitle(true);
     closeModal();
   };
