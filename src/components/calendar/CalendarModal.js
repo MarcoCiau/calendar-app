@@ -42,7 +42,7 @@ export const CalendarModal = () => {
   const dispatch = useDispatch(); //get redux-dispatch function
 
   const [startDate, setStartDate] = useState(defaultStartDate.toDate());
-  const [endDate, setEndDate] = useState(defaultEndDate.toDate());
+  const [endDate, setEndDate] = useState(defaultStartDate.toDate());
   const [isAValidTitle, setIsAValidTitle] = useState(true);
 
   /* Form Values */
@@ -58,6 +58,8 @@ export const CalendarModal = () => {
       setFormValues(selected);
     }
     else {
+      setStartDate(defaultStartDate.toDate());
+      setEndDate(defaultEndDate.toDate());
       setFormValues(defaultEvent);
     }
   }, [selected, setFormValues])
