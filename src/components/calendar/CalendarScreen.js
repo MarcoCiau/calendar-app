@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import moment from "moment";
 import { Calendar, momentLocalizer } from "react-big-calendar";
 import { CalendarEvent } from "./CalendarEvent";
@@ -21,37 +21,14 @@ moment.locale("es");
 */
 const localizer = momentLocalizer(moment);
 
-/* Define Event List */
-const myEventsList = [
-  {
-    title: "Develop Promatic API",
-    start: moment().toDate(),
-    end: moment().add(2, "hours").toDate(),
-    allDay: false,
-    resource: false,
-    user: {
-      id: "oandnbf9ss0jk498685jhn",
-      name: "marco",
-    },
-  },
-  {
-    title: "Learn English",
-    start: moment().add(9, "hours").toDate(),
-    end: moment().add(10, "hours").toDate(),
-    allDay: false,
-    resource: false,
-    user: {
-      id: "oandnbf56s0jk498685jhn",
-      name: "user1",
-    },
-  },
-];
-
 export const CalendarScreen = () => {
+
+  const dispatch = useDispatch();//get redux-dispatch function
+  const {events} = useSelector((state) => state.calendar); //get events from redux's store
+
   const [lastView, setLastView] = useState(
     localStorage.getItem("lastView") || "week"
   );
-  const dispatch = useDispatch();//get redux-dispatch function
 
   /* Handling Events */
 
@@ -74,7 +51,6 @@ export const CalendarScreen = () => {
   
   /* Return style for that event */
   const eventStyleGetter = (event, start, end, isSelected) => {
-    console.log(event, start, end, isSelected);
     const style = {
       backgroundColor: "#367CF7",
       borderRadius: "0px",
@@ -94,7 +70,7 @@ export const CalendarScreen = () => {
       <Calendar
         className="calendar-screen"
         localizer={localizer}
-        events={myEventsList}
+        events={events}
         startAccessor="start"
         endAccessor="end"
         messages={messages}
