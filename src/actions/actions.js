@@ -20,3 +20,5 @@ export const EventUpdatedAction = (e) => ({
   type: actionTypes.eventUpdated,
   payload: e,
 });
+
+export const EventDeletedAction =  { type: actionTypes.eventDeleted };

@@ -4,5 +4,6 @@ export const actionTypes = {
     eventSelected : "[event] Select Event",
     eventAddNew: "[event] Add new Event",
     eventClearActive : "[event] Clear Active Event",
-    eventUpdated: "[event] Event Updated"
+    eventUpdated: "[event] Event Updated",
+    eventDeleted: "[event] Event Deleted",
 }
