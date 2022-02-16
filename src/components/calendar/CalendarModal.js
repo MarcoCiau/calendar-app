@@ -52,7 +52,6 @@ export const CalendarModal = () => {
   /* useEffect Hook pending for eventSelected state */
   useEffect(() => {
     if (selected){
-      console.log(selected);
       setStartDate(selected.start);
       setEndDate(selected.end);
       setFormValues(selected);

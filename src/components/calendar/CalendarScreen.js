@@ -46,13 +46,12 @@ export const CalendarScreen = () => {
   };
 
   const onSelectSlotHandler = (e) => {
-    
     const  {action, start, end} = e;
-    console.log(action, start, end);
+    /* clear active event */
     if (selected) {
       dispatch(clearActiveEvent);
     }
-
+    /* add new event based on select slot */
     if (action === "doubleClick") {
       dispatch(addSelectedSlotAction({start, end}));
       dispatch(openModalAction);
