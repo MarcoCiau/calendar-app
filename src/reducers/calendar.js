@@ -31,6 +31,7 @@ const initialState = {
     },
   ],
   selected: null,
+  slot: null,
 };
 
 export const calendarReducer = (state = initialState, action) => {
@@ -48,6 +49,11 @@ export const calendarReducer = (state = initialState, action) => {
           action.payload
         ]
       }
+      case actionTypes.eventAddSelectedSlot:
+        return {
+          ...state,
+          slot: action.payload
+        }
     case actionTypes.eventClearActive:
       return {
         ...state, 

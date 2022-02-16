@@ -14,6 +14,11 @@ export const addNewEventAction = (e) => ({
   payload: e,
 });
 
+export const addSelectedSlotAction = (e) => ({
+  type: actionTypes.eventAddSelectedSlot,
+  payload: e,
+})
+
 export const clearActiveEvent = { type: actionTypes.eventClearActive };
 
 export const EventUpdatedAction = (e) => ({

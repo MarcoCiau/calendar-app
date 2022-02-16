@@ -7,7 +7,7 @@ import { CalendarModal } from "./CalendarModal";
 import { Navbar } from "../ui/Navbar";
 import { FloatingBtn } from "../ui/FloatingBtn";
 import { messages } from "../../utils/calendar-messages-es";
-import { clearActiveEvent, EventDeletedAction, openModalAction, selectEventAction } from "../../actions/actions";
+import { addSelectedSlotAction, clearActiveEvent, EventDeletedAction, openModalAction, selectEventAction } from "../../actions/actions";
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import "moment/locale/es";
 import "./CalendarScreen.css";
@@ -30,7 +30,7 @@ export const CalendarScreen = () => {
     localStorage.getItem("lastView") || "week"
   );
 
-  /* Handling Events */
+  /* Handling Big-Calendar Events */
 
   const onDoubleClickEventHandler = (e) => {
     dispatch(openModalAction);
@@ -44,6 +44,22 @@ export const CalendarScreen = () => {
     localStorage.setItem("lastView", e);
     setLastView(e);
   };
+
+  const onSelectSlotHandler = (e) => {
+    
+    const  {action, start, end} = e;
+    console.log(action, start, end);
+    if (selected) {
+      dispatch(clearActiveEvent);
+    }
+
+    if (action === "doubleClick") {
+      dispatch(addSelectedSlotAction({start, end}));
+      dispatch(openModalAction);
+    }
+  }
+
+  /* Handling Floating Actions Buttons Events */
 
   const onAddNewEventHandler = (e) => {
     dispatch(clearActiveEvent);
@@ -79,6 +95,7 @@ export const CalendarScreen = () => {
         startAccessor="start"
         endAccessor="end"
         messages={messages}
+        selectable={true}
         eventPropGetter={eventStyleGetter}
         components={{
           event: CalendarEvent,
@@ -87,6 +104,7 @@ export const CalendarScreen = () => {
         onDoubleClickEvent={onDoubleClickEventHandler}
         onSelectEvent={onSelectEventHandler}
         onView={onViewChangeHandler}
+        onSelectSlot={onSelectSlotHandler}
       />
       
       <CalendarModal />

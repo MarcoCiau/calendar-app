@@ -4,7 +4,7 @@ import Modal from "react-modal";
 import DateTimePicker from "react-datetime-picker";
 import moment from "moment";
 import Swal from "sweetalert2";
-import { addNewEventAction, clearActiveEvent, closeModalAction, EventUpdatedAction } from "../../actions/actions";
+import { addNewEventAction, closeModalAction, EventUpdatedAction } from "../../actions/actions";
 import {
   isAValidEndDate,
   validateTitle,
@@ -38,11 +38,11 @@ export const CalendarModal = () => {
 
   /* Redux State Management */
   const modalOpen = useSelector((state) => state.ui.modalOpen); //get app state from redux's store
-  const {selected} = useSelector((state) => state.calendar);
+  const {selected, slot} = useSelector((state) => state.calendar);
   const dispatch = useDispatch(); //get redux-dispatch function
 
   const [startDate, setStartDate] = useState(defaultStartDate.toDate());
-  const [endDate, setEndDate] = useState(defaultStartDate.toDate());
+  const [endDate, setEndDate] = useState(defaultEndDate.toDate());
   const [isAValidTitle, setIsAValidTitle] = useState(true);
 
   /* Form Values */
@@ -63,6 +63,19 @@ export const CalendarModal = () => {
       setFormValues(defaultEvent);
     }
   }, [selected, setFormValues])
+
+  
+  useEffect(() => {
+    if (slot){
+      setStartDate(slot.start);
+      setEndDate(slot.start);
+      setFormValues({
+        ...formValues,
+        start: slot.start,
+        end:slot.end,
+      })
+    }
+  }, [slot])
   
 
 
@@ -113,7 +126,6 @@ export const CalendarModal = () => {
 
   function closeModal() {
     dispatch(closeModalAction);
-    dispatch(clearActiveEvent);
     /* Reset Form's values */
     setStartDate(defaultStartDate.toDate());
     setEndDate(defaultEndDate.toDate());
@@ -147,7 +159,7 @@ export const CalendarModal = () => {
         className="modal"
         overlayClassName="modal-overlay"
       >
-        <h1> Nuevo evento </h1>
+        <h1> {`${selected ? "Editar evento":"Nuevo evento"}`} </h1>
         <hr />
         <form className="container" onSubmit={formSubmitHandler}>
           <div className="form-group">
