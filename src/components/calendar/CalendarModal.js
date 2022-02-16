@@ -25,8 +25,14 @@ const customStyles = {
 // Make sure to bind modal to your appElement (https://reactcommunity.org/react-modal/accessibility/)
 Modal.setAppElement("#root");
 
-const defaultStartDate = moment().minutes(0).seconds(0).add(1, "hours");
+const defaultStartDate = moment().minutes(0).seconds(0);
 const defaultEndDate = defaultStartDate.clone().add(1, "hours");
+const defaultEvent = {
+  title: "",
+  notes: "",
+  start: defaultStartDate.toDate(),
+  end: defaultEndDate.toDate(),
+}
 
 export const CalendarModal = () => {
   const [startDate, setStartDate] = useState(defaultStartDate.toDate());
@@ -37,12 +43,7 @@ export const CalendarModal = () => {
   const modalOpen = useSelector((state) => state.ui.modalOpen); //get app state from redux's store
 
   /* Default Form Values */
-  const [formValues, setFormValues] = useState({
-    title: "Evento",
-    notes: "",
-    start: startDate,
-    end: endDate,
-  });
+  const [formValues, setFormValues] = useState(defaultEvent);
   const { title, notes, start, end } = formValues;
 
   /* Handle Form's Inputs */
@@ -56,7 +57,7 @@ export const CalendarModal = () => {
   /* Handle Form submit */
   const formSubmitHandler = (e) => {
     e.preventDefault();
-    console.log(formValues);
+    
     if (!isAValidEndDate(start, end)) {
       return Swal.fire({
         icon: "error",
@@ -79,20 +80,17 @@ export const CalendarModal = () => {
         },
       })
     );
-
-    setFormValues({
-      title: "Evento",
-      notes: "",
-      start: startDate,
-      end: endDate,
-    });
-
+    
     setIsAValidTitle(true);
     closeModal();
   };
 
   function closeModal() {
     dispatch(closeModalAction);
+    /* Reset Form's values */
+    setStartDate(defaultStartDate.toDate());
+    setEndDate(defaultEndDate.toDate());
+    setFormValues(defaultEvent);
   }
 
   const onChangeStartDate = (e) => {
@@ -113,7 +111,6 @@ export const CalendarModal = () => {
 
   return (
     <div>
-      {/* <button onClick={openModal}>Open Modal</button> */}
       <Modal
         isOpen={modalOpen}
         onRequestClose={closeModal}
@@ -128,7 +125,6 @@ export const CalendarModal = () => {
         <form className="container" onSubmit={formSubmitHandler}>
           <div className="form-group">
             <label>Fecha y hora inicio</label>
-            {/* <input className="form-control" placeholder="Fecha inicio" /> */}
             <DateTimePicker
               onChange={onChangeStartDate}
               value={startDate}
@@ -138,11 +134,9 @@ export const CalendarModal = () => {
 
           <div className="form-group">
             <label>Fecha y hora fin</label>
-            {/* <input className="form-control" placeholder="Fecha inicio" /> */}
             <DateTimePicker
               onChange={onChangeEndDate}
               value={endDate}
-              minDate={startDate}
               className="form-control"
             />
           </div>
