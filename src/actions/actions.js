@@ -13,3 +13,5 @@ export const addNewEventAction = (e) => ({
   type: actionTypes.eventAddNew,
   payload: e,
 });
+
+export const clearActiveEvent = { type: actionTypes.eventClearActive };
