@@ -7,7 +7,7 @@ import { CalendarModal } from "./CalendarModal";
 import { Navbar } from "../ui/Navbar";
 import { FloatingBtn } from "../ui/FloatingBtn";
 import { messages } from "../../utils/calendar-messages-es";
-import { openModalAction, selectEventAction } from "../../actions/actions";
+import { clearActiveEvent, EventDeletedAction, openModalAction, selectEventAction } from "../../actions/actions";
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import "moment/locale/es";
 import "./CalendarScreen.css";
@@ -24,7 +24,7 @@ const localizer = momentLocalizer(moment);
 export const CalendarScreen = () => {
 
   const dispatch = useDispatch();//get redux-dispatch function
-  const {events} = useSelector((state) => state.calendar); //get events from redux's store
+  const {events, selected} = useSelector((state) => state.calendar); //get events from redux's store
 
   const [lastView, setLastView] = useState(
     localStorage.getItem("lastView") || "week"
@@ -46,9 +46,14 @@ export const CalendarScreen = () => {
   };
 
   const onAddNewEventHandler = (e) => {
+    dispatch(clearActiveEvent);
     dispatch(openModalAction);
   }
   
+  const onDeleteEventHandler = (e) => {
+    dispatch(EventDeletedAction)
+  }
+
   /* Return style for that event */
   const eventStyleGetter = (event, start, end, isSelected) => {
     const style = {
@@ -64,8 +69,7 @@ export const CalendarScreen = () => {
   };
   return (
     <div>
-      <FloatingBtn style={"btn-primary fab"} icon={"fas fa-plus"} clickHandler={onAddNewEventHandler}/>
-      <FloatingBtn style={"btn-danger fab-danger"} icon={"fas fa-trash"} label={" Eliminar Evento"} clickHandler={onAddNewEventHandler} />
+    
       <Navbar />
 
       <Calendar
@@ -86,6 +90,9 @@ export const CalendarScreen = () => {
       />
       
       <CalendarModal />
+
+      <FloatingBtn style={"btn-primary fab"} icon={"fas fa-plus"} clickHandler={onAddNewEventHandler}/>
+      {selected && <FloatingBtn style={"btn-danger fab-danger"} icon={"fas fa-trash"} label={" Eliminar Evento"} clickHandler={onDeleteEventHandler} />}
     </div>
   );
 };
