@@ -64,7 +64,8 @@ export const CalendarScreen = () => {
   };
   return (
     <div>
-      <FloatingBtn clickHandler={onAddNewEventHandler}/>
+      <FloatingBtn style={"btn-primary fab"} icon={"fas fa-plus"} clickHandler={onAddNewEventHandler}/>
+      <FloatingBtn style={"btn-danger fab-danger"} icon={"fas fa-trash"} label={" Eliminar Evento"} clickHandler={onAddNewEventHandler} />
       <Navbar />
 
       <Calendar
