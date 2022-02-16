@@ -4,7 +4,7 @@ import Modal from "react-modal";
 import DateTimePicker from "react-datetime-picker";
 import moment from "moment";
 import Swal from "sweetalert2";
-import { addNewEventAction, clearActiveEvent, closeModalAction } from "../../actions/actions";
+import { addNewEventAction, clearActiveEvent, closeModalAction, EventUpdatedAction } from "../../actions/actions";
 import {
   isAValidEndDate,
   validateTitle,
@@ -88,16 +88,22 @@ export const CalendarModal = () => {
       return setIsAValidTitle(false);
     }
 
-    dispatch(
-      addNewEventAction({
-        ...formValues,
-        id: new Date(),
-        user: {
-          id: "oandnbf56s0jk498685jhn",
-          name: "user1",
-        },
-      })
-    );
+    if (modalOpen) {
+      dispatch(EventUpdatedAction(formValues))
+    }
+    else {
+      dispatch(
+        addNewEventAction({
+          ...formValues,
+          id: new Date(),
+          user: {
+            id: "oandnbf56s0jk498685jhn",
+            name: "user1",
+          },
+        })
+      );
+    }
+
     
     setIsAValidTitle(true);
     closeModal();

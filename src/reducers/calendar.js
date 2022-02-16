@@ -4,7 +4,9 @@ import { actionTypes } from "../actionTypes/actionTypes";
 const initialState = {
   events: [
     {
+      id: new Date(),
       title: "Develop Promatic API",
+      notes:"",
       start: moment().toDate(),
       end: moment().add(2, "hours").toDate(),
       allDay: false,
@@ -15,7 +17,9 @@ const initialState = {
       },
     },
     {
+      id: new Date() + 100,
       title: "Learn English",
+      notes:"",
       start: moment().add(9, "hours").toDate(),
       end: moment().add(10, "hours").toDate(),
       allDay: false,
@@ -48,6 +52,13 @@ export const calendarReducer = (state = initialState, action) => {
       return {
         ...state, 
         selected: null
+      }
+    case actionTypes.eventUpdated:
+      return {
+        ...state,
+        events : state.events.map(event => {
+           return  event.id === action.payload.id ? action.payload: event;
+        })
       }
     default:
       return state;
