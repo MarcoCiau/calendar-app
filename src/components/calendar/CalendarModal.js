@@ -1,10 +1,10 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Modal from "react-modal";
 import DateTimePicker from "react-datetime-picker";
 import moment from "moment";
 import Swal from "sweetalert2";
-import { addNewEventAction, closeModalAction } from "../../actions/actions";
+import { addNewEventAction, clearActiveEvent, closeModalAction } from "../../actions/actions";
 import {
   isAValidEndDate,
   validateTitle,
@@ -35,16 +35,34 @@ const defaultEvent = {
 }
 
 export const CalendarModal = () => {
+
+  /* Redux State Management */
+  const modalOpen = useSelector((state) => state.ui.modalOpen); //get app state from redux's store
+  const {selected} = useSelector((state) => state.calendar);
+  const dispatch = useDispatch(); //get redux-dispatch function
+
   const [startDate, setStartDate] = useState(defaultStartDate.toDate());
   const [endDate, setEndDate] = useState(defaultEndDate.toDate());
   const [isAValidTitle, setIsAValidTitle] = useState(true);
-  /* Redux State Management */
-  const dispatch = useDispatch(); //get redux-dispatch function
-  const modalOpen = useSelector((state) => state.ui.modalOpen); //get app state from redux's store
 
-  /* Default Form Values */
+  /* Form Values */
   const [formValues, setFormValues] = useState(defaultEvent);
   const { title, notes, start, end } = formValues;
+
+  /* useEffect Hook pending for eventSelected state */
+  useEffect(() => {
+    if (selected){
+      console.log(selected);
+      setStartDate(selected.start);
+      setEndDate(selected.end);
+      setFormValues(selected);
+    }
+    else {
+      setFormValues(defaultEvent);
+    }
+  }, [selected, setFormValues])
+  
+
 
   /* Handle Form's Inputs */
   const formInputChangeHandler = ({ target }) => {
@@ -87,6 +105,7 @@ export const CalendarModal = () => {
 
   function closeModal() {
     dispatch(closeModalAction);
+    dispatch(clearActiveEvent);
     /* Reset Form's values */
     setStartDate(defaultStartDate.toDate());
     setEndDate(defaultEndDate.toDate());
