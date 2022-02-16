@@ -4,7 +4,7 @@ import { uiReducer } from "./uiReducer";
 
 export const rootReducer = combineReducers({
   ui: uiReducer,
-  calendarRed : calendarReducer
+  calendar : calendarReducer
   //TODO: add AuthReducer
   //TODO: add Calendar Reducer
 });
