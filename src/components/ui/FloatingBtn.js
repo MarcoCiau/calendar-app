@@ -1,10 +1,11 @@
 import React from "react";
 import "./FloatingBtn.css"
-export const FloatingBtn = ({clickHandler}) => {
+export const FloatingBtn = ({style, icon, label, clickHandler}) => {
   return (
     <>
-    <button className="btn btn-primary fab " onClick={clickHandler}>
-      <i className="fas fa-plus"></i>
+    <button className= {`btn ${style}`}  onClick={clickHandler}>
+      <i className={icon}></i>
+      {label}
     </button>
     </>
   );

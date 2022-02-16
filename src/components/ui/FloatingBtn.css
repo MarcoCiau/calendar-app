@@ -6,3 +6,11 @@
   position: fixed;
   right: 10px;
 }
+
+.fab-danger {
+  bottom: 25px;
+  font-size: 18px;
+  padding: 5px;
+  position: fixed;
+  left: 25px;
+}
