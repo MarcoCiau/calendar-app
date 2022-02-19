@@ -1,14 +1,14 @@
 import React from "react";
 import { useDispatch } from "react-redux";
-import { AuthStartLogin } from "../../actions/actions";
+import { authStartLoginAction } from "../../actions/actions";
 import { useForm } from "../../hooks/useForm";
 import "./LoginScreen.css";
 
 export const LoginScreen = () => {
   const dispatch = useDispatch();
   const [loginFormValues, handleInputChangeLoginForm] = useForm({
-    loginEmail: "marco@makerlab.mx",
-    loginPassword: "7890asfdfan37sd8",
+    loginEmail: "",
+    loginPassword: "",
   });
 
   // const [RegisterFormValues, handleInputChangeRegisterForm, resetRegisterForm] =
@@ -18,7 +18,7 @@ export const LoginScreen = () => {
 
   const handleOnSubmit = (e) => {
     e.preventDefault();
-    dispatch(AuthStartLogin(loginEmail, loginPassword));
+    dispatch(authStartLoginAction(loginEmail, loginPassword));
   };
 
   return (
