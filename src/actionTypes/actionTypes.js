@@ -7,4 +7,13 @@ export const actionTypes = {
     eventClearActive : "[event] Clear Active Event",
     eventUpdated: "[event] Event Updated",
     eventDeleted: "[event] Event Deleted",
+    authCheckingLoginState: "[auth] Checking Login State",
+    authLoginStateChecked: "[auth] Checking Login State Finished",
+    authStartLogin: "[auth] Start Login",
+    authLogin: "[auth] Login",
+    authStartRegister: "[auth] Start Register",
+    authRegister: "[auth] Register",
+    authStartRefreshToken: "[auth] Start Refresh token",
+    authRefreshToken: "[auth] Start token",
+    authStartLogout: "[auth] Start Logout",
 }
