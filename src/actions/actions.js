@@ -1,4 +1,5 @@
 import { actionTypes } from "../actionTypes/actionTypes";
+import { executePostReq } from "../utils/api-fetch";
 
 export const openModalAction = { type: actionTypes.uiOpenModal };
 
@@ -27,3 +28,12 @@ export const EventUpdatedAction = (e) => ({
 });
 
 export const EventDeletedAction =  { type: actionTypes.eventDeleted };
+
+/* Auth Actions */
+
+export const AuthStartLogin = (email, password) => { 
+  return async() => {
+    const result = await executePostReq("", "/auth/signin", {email, password});
+    console.log(result);
+  }
+};
