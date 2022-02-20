@@ -81,3 +81,39 @@ export const authStartRegisterAction = (name, email, password) => {
     }
   }
 };
+
+export const authCheckingLoginState = () => {
+  return async(dispatch) => {//dispatch function as first argument from thunk
+    const refreshToken = localStorage.getItem("refreshToken") || "";
+    const result = await executePostReq("", "/auth/refreshToken", {refreshToken});
+    console.log(result);
+    if (result.status) {
+      localStorage.setItem('accessToken', result.accessToken);
+      localStorage.setItem('refreshToken', result.refreshToken);
+      localStorage.setItem('loggedDatetime', new Date().getTime());
+      dispatch(authLoginAction({
+        uid: result.user._id,
+        name: result.user.name
+      }));
+    }
+    else {//Redirect to login form
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: `Signup User failed. ${result.msg}`
+      });
+      dispatch(authLoginStateChecked());
+    }
+  }
+}
+
+export const authLoginStateChecked = () => ({type: actionTypes.authLoginStateChecked});
+
+export const authStartLogoutAction = () => {
+  return (dispatch) => {
+    localStorage.clear();
+    dispatch(authLogoutAction());
+  }
+};
+
+const authLogoutAction = () => ({type: actionTypes.authLogout});

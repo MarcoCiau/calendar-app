@@ -15,5 +15,5 @@ export const actionTypes = {
     authRegister: "[auth] Register",
     authStartRefreshToken: "[auth] Start Refresh token",
     authRefreshToken: "[auth] Start token",
-    authStartLogout: "[auth] Start Logout",
+    authLogout: "[auth] Logout",
 }
