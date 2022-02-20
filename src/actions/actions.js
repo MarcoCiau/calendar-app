@@ -58,3 +58,26 @@ const authLoginAction = (user) => ({
   type: actionTypes.authLogin,
   payload: user
 });
+
+export const authStartRegisterAction = (name, email, password) => { 
+  return async(dispatch) => {//dispatch function as first argument from thunk
+    const result = await executePostReq("", "/auth/signup", {name, email, password});
+    console.log(result);
+    if (result.status) {
+      localStorage.setItem('accessToken', result.accessToken);
+      localStorage.setItem('refreshToken', result.refreshToken);
+      localStorage.setItem('loggedDatetime', new Date().getTime());
+      dispatch(authLoginAction({
+        uid: result.user._id,
+        name: result.user.name
+      }))
+    }
+    else {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: `Signup User failed. ${result.msg}`
+      });
+    }
+  }
+};
