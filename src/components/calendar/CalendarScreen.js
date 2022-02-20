@@ -7,7 +7,7 @@ import { CalendarModal } from "./CalendarModal";
 import { Navbar } from "../ui/Navbar";
 import { FloatingBtn } from "../ui/FloatingBtn";
 import { messages } from "../../utils/calendar-messages-es";
-import { addSelectedSlotAction, clearActiveEvent, EventDeletedAction, openModalAction, selectEventAction } from "../../actions/actions";
+import { addSelectedSlotAction, authStartLogoutAction, clearActiveEvent, EventDeletedAction, openModalAction, selectEventAction } from "../../actions/actions";
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import "moment/locale/es";
 import "./CalendarScreen.css";
@@ -69,6 +69,12 @@ export const CalendarScreen = () => {
     dispatch(EventDeletedAction)
   }
 
+  /* Handling Navbar logout button */
+  const logoutHandler = (e) => {
+    e.preventDefault();
+    localStorage.clear();
+    dispatch(authStartLogoutAction());
+  }
   /* Return style for that event */
   const eventStyleGetter = (event, start, end, isSelected) => {
     const style = {
@@ -85,7 +91,7 @@ export const CalendarScreen = () => {
   return (
     <div>
     
-      <Navbar />
+      <Navbar onSubmitHandler={logoutHandler}/>
 
       <Calendar
         className="calendar-screen"
