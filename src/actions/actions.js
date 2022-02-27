@@ -11,7 +11,27 @@ export const selectEventAction = (e) => ({
   payload: e,
 });
 
-export const addNewEventAction = (e) => ({
+export const eventStartAddAction = (e) => {
+  return async (dispatch) => {
+    const accessToken = localStorage.getItem("accessToken");
+    const result = await executePostReq(accessToken, "/event", e);
+    if (result.status) {
+      const {start, end, ...eventObj} = result.event;
+      const startDate = new Date(start);
+      const endDate = new Date(end);
+      dispatch(addNewEventAction({start: startDate, end: endDate, ...eventObj}))
+    }
+    else {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: `Creating Event failed.`
+      });
+    }
+  }
+}
+
+const addNewEventAction = (e) => ({
   type: actionTypes.eventAddNew,
   payload: e,
 });

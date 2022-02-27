@@ -2,6 +2,7 @@ export const actionTypes = {
     uiOpenModal : "[ui] Open Modal Action",
     uiCloseModal : "[ui] Close Modal Action",
     eventSelected : "[event] Select Event",
+    eventStartAdd: "[event] Add New Event Request Started",
     eventAddNew: "[event] Add new Event",
     eventAddSelectedSlot: "[event] Add Selected Slot Event",
     eventClearActive : "[event] Clear Active Event",
