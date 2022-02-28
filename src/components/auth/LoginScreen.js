@@ -37,7 +37,6 @@ export const LoginScreen = () => {
         text: `The password are not equal`
       });
     }
-    console.log("submit register");
     dispatch(authStartRegisterAction(registerName, registerEmail, registerPassword));
   }
 
