@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/MarcoCiau/calendar-app/static/css/main.4bfec0a7.css",
+    "main.js": "/MarcoCiau/calendar-app/static/js/main.8dc71132.js",
+    "index.html": "/MarcoCiau/calendar-app/index.html",
+    "main.4bfec0a7.css.map": "/MarcoCiau/calendar-app/static/css/main.4bfec0a7.css.map",
+    "main.8dc71132.js.map": "/MarcoCiau/calendar-app/static/js/main.8dc71132.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.4bfec0a7.css",
+    "static/js/main.8dc71132.js"
+  ]
+}
