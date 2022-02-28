@@ -121,8 +121,8 @@ export const CalendarScreen = () => {
       
       <CalendarModal />
 
-      <FloatingBtn style={"btn-primary fab"} icon={"fas fa-plus"} clickHandler={onAddNewEventHandler}/>
-      {selected && <FloatingBtn style={"btn-danger fab-danger"} icon={"fas fa-trash"} label={" Eliminar Evento"} clickHandler={onDeleteEventHandler} />}
+      <FloatingBtn styleProp={"btn-primary fab"} icon={"fas fa-plus"} clickHandler={onAddNewEventHandler}/>
+      {selected && <FloatingBtn styleProp={"btn-danger fab-danger"} icon={"fas fa-trash"} label={" Eliminar Evento"} clickHandler={onDeleteEventHandler} />}
     </div>
   );
 };
