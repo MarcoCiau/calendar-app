@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import { useDispatch, useSelector } from "react-redux";
 import moment from "moment";
 import { Calendar, momentLocalizer } from "react-big-calendar";
@@ -7,7 +7,9 @@ import { CalendarModal } from "./CalendarModal";
 import { Navbar } from "../ui/Navbar";
 import { FloatingBtn } from "../ui/FloatingBtn";
 import { messages } from "../../utils/calendar-messages-es";
-import { addSelectedSlotAction, authStartLogoutAction, clearActiveEvent, EventDeletedAction, openModalAction, selectEventAction } from "../../actions/actions";
+import { addSelectedSlotAction, authStartLogoutAction, clearActiveEvent, EventDeletedAction, 
+  EventStartGetAllAction, 
+  openModalAction, selectEventAction } from "../../actions/actions";
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import "moment/locale/es";
 import "./CalendarScreen.css";
@@ -23,12 +25,17 @@ const localizer = momentLocalizer(moment);
 
 export const CalendarScreen = () => {
 
-  const dispatch = useDispatch();//get redux-dispatch function
+  const dispatch = useDispatch();//get redux-dispatch function  
   const {events, selected} = useSelector((state) => state.calendar); //get events from redux's store
-
+  const {uid} = useSelector((state) => state.auth);
   const [lastView, setLastView] = useState(
     localStorage.getItem("lastView") || "week"
   );
+  
+  /* Get All Events */
+  useEffect(() => {
+    if (uid) dispatch(EventStartGetAllAction(uid))
+  }, [dispatch]);
 
   /* Handling Big-Calendar Events */
 
