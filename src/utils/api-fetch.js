@@ -1,4 +1,30 @@
 const baseUrl = process.env.REACT_APP_API_URL;
+/*
+MSG Interceptor to update JWT
+{
+    "status": false,
+    "msg": "Invalid or Expired JWT",
+    "error": {
+        "name": "TokenExpiredError",
+        "message": "jwt expired",
+        "expiredAt": "2022-02-24T15:11:50.000Z"
+    }
+}
+*/
+const requestInterceptor = async (response) => {
+    if (response.status === true) return true;
+    if (response.status === false && response.msg === "Invalid or Expired JWT")
+    {
+        const refreshToken = localStorage.getItem("refreshToken") || "";
+        const result = await executePostReq("", "/auth/refreshToken", {refreshToken});
+        if (result.status) {
+            localStorage.setItem('accessToken', result.accessToken);
+            localStorage.setItem('refreshToken', result.refreshToken);
+            localStorage.setItem('loggedDatetime', new Date().getTime());
+        }
+    }
+    return false;
+}
 
 const executeAPIRequest = async (method="GET", endpoint="", body={}) => {
     const token = localStorage.getItem("accessToken");
@@ -49,5 +75,6 @@ const executeGetRequest = async (endpoint="") => {
 export {
     executeAPIRequest,
     executePostReq,
-    executeGetRequest
+    executeGetRequest,
+    requestInterceptor
 }
