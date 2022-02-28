@@ -1,12 +1,11 @@
 import moment from "moment";
 import { actionTypes } from "../actionTypes/actionTypes";
 
-const initialState = {
-  events: [
-    {
+/*
+{
       _id: new Date(),
       title: "Develop Promatic API",
-      notes:"",
+      notes: "",
       start: moment().toDate(),
       end: moment().add(2, "hours").toDate(),
       user: {
@@ -17,7 +16,7 @@ const initialState = {
     {
       _id: new Date() + 100,
       title: "Learn English",
-      notes:"",
+      notes: "",
       start: moment().add(9, "hours").toDate(),
       end: moment().add(10, "hours").toDate(),
       user: {
@@ -25,7 +24,10 @@ const initialState = {
         name: "user1",
       },
     },
-  ],
+*/
+
+const initialState = {
+  events: [],
   selected: null,
   slot: null,
 };
@@ -40,36 +42,42 @@ export const calendarReducer = (state = initialState, action) => {
     case actionTypes.eventAddNew:
       return {
         ...state,
-        events: [
-          ...state.events,
-          action.payload
-        ]
-      }
-      case actionTypes.eventAddSelectedSlot:
-        return {
-          ...state,
-          slot: action.payload
-        }
+        events: [...state.events, action.payload],
+      };
+    case actionTypes.eventAddSelectedSlot:
+      return {
+        ...state,
+        slot: action.payload,
+      };
     case actionTypes.eventClearActive:
       return {
-        ...state, 
-        selected: null
-      }
+        ...state,
+        selected: null,
+      };
     case actionTypes.eventUpdated:
       return {
         ...state,
-        events : state.events.map(event => {
-           return  event.id === action.payload.id ? action.payload: event;
-        })
-      }
-      case actionTypes.eventDeleted:
-        return {
-          ...state,
-          events : state.events.filter(event => {
-             return  event.id !== state.selected.id;
-          }),
-          selected : null
-        }
+        events: state.events.map((event) => {
+          return event.id === action.payload.id ? action.payload : event;
+        }),
+      };
+    case actionTypes.eventDeleted:
+      return {
+        ...state,
+        events: state.events.filter((event) => {
+          return event.id !== state.selected.id;
+        }),
+        selected: null,
+      };
+    case actionTypes.eventLoaded:
+      return {
+        ...state,
+        events: action.payload.map((event) => {
+          const startDate = new Date(event.start);
+          const endDate = new Date(event.end);
+          return { ...event, start: startDate, end: endDate };
+        }),
+      };
     default:
       return state;
   }
