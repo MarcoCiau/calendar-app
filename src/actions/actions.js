@@ -1,6 +1,6 @@
 import Swal from "sweetalert2";
 import { actionTypes } from "../actionTypes/actionTypes";
-import { executePostReq } from "../utils/api-fetch";
+import { executeGetRequest, executePostReq } from "../utils/api-fetch";
 
 export const openModalAction = { type: actionTypes.uiOpenModal };
 
@@ -48,6 +48,21 @@ export const EventUpdatedAction = (e) => ({
   payload: e,
 });
 
+export const EventStartGetAllAction = (uid="") => {
+  return async (dispatch) => {
+    const result = await executeGetRequest(`/event?from=0&limit=54&sort=-1&query={\"userId\":\"${uid}\"}`);
+    if (result.status)
+    {
+      dispatch(EventLoadedAction(result.events));
+    }
+  }
+}
+
+const EventLoadedAction  = (e) => ({
+  type: actionTypes.eventLoaded,
+  payload: e,
+});
+
 export const EventDeletedAction =  { type: actionTypes.eventDeleted };
 
 /* Auth Actions */
@@ -82,7 +97,6 @@ const authLoginAction = (user) => ({
 export const authStartRegisterAction = (name, email, password) => { 
   return async(dispatch) => {//dispatch function as first argument from thunk
     const result = await executePostReq("", "/auth/signup", {name, email, password});
-    console.log(result);
     if (result.status) {
       localStorage.setItem('accessToken', result.accessToken);
       localStorage.setItem('refreshToken', result.refreshToken);
@@ -106,7 +120,6 @@ export const authCheckingLoginState = () => {
   return async(dispatch) => {//dispatch function as first argument from thunk
     const refreshToken = localStorage.getItem("refreshToken") || "";
     const result = await executePostReq("", "/auth/refreshToken", {refreshToken});
-    console.log(result);
     if (result.status) {
       localStorage.setItem('accessToken', result.accessToken);
       localStorage.setItem('refreshToken', result.refreshToken);

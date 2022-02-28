@@ -8,6 +8,7 @@ export const actionTypes = {
     eventClearActive : "[event] Clear Active Event",
     eventUpdated: "[event] Event Updated",
     eventDeleted: "[event] Event Deleted",
+    eventLoaded: "[event] Event Loaded from API",
     authCheckingLoginState: "[auth] Checking Login State",
     authLoginStateChecked: "[auth] Checking Login State Finished",
     authStartLogin: "[auth] Start Login",
