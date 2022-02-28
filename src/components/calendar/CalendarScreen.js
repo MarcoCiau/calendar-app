@@ -7,7 +7,7 @@ import { CalendarModal } from "./CalendarModal";
 import { Navbar } from "../ui/Navbar";
 import { FloatingBtn } from "../ui/FloatingBtn";
 import { messages } from "../../utils/calendar-messages-es";
-import { addSelectedSlotAction, authStartLogoutAction, clearActiveEvent, EventDeletedAction, 
+import { addSelectedSlotAction, authStartLogoutAction, clearActiveEvent, EventStartDeleteAction, 
   EventStartGetAllAction, 
   openModalAction, selectEventAction } from "../../actions/actions";
 import "react-big-calendar/lib/css/react-big-calendar.css";
@@ -73,7 +73,7 @@ export const CalendarScreen = () => {
   }
   
   const onDeleteEventHandler = (e) => {
-    dispatch(EventDeletedAction)
+    dispatch(EventStartDeleteAction(selected))
   }
 
   /* Handling Navbar logout button */

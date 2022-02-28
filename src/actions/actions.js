@@ -1,6 +1,6 @@
 import Swal from "sweetalert2";
 import { actionTypes } from "../actionTypes/actionTypes";
-import { executeGetRequest, executePostReq } from "../utils/api-fetch";
+import { executeAPIRequest, executeGetRequest, executePostReq } from "../utils/api-fetch";
 
 export const openModalAction = { type: actionTypes.uiOpenModal };
 
@@ -43,7 +43,21 @@ export const addSelectedSlotAction = (e) => ({
 
 export const clearActiveEvent = { type: actionTypes.eventClearActive };
 
-export const EventUpdatedAction = (e) => ({
+export const EventStartUpdateAction = (e) => {
+  const {_id, user, ...event} = e;
+  return async (dispatch) => {
+    const result = await executeAPIRequest("PUT", `/event/${_id}`, event);
+    if (result.status)
+    {
+      const {start, end, ...eventObj} = result.event;
+      const startDate = new Date(start);
+      const endDate = new Date(end);
+      dispatch(EventUpdatedAction({start: startDate, end: endDate, ...eventObj}))
+    }
+  }
+}
+
+const EventUpdatedAction = (e) => ({
   type: actionTypes.eventUpdated,
   payload: e,
 });
@@ -63,7 +77,18 @@ const EventLoadedAction  = (e) => ({
   payload: e,
 });
 
-export const EventDeletedAction =  { type: actionTypes.eventDeleted };
+export const EventStartDeleteAction = (e) => {
+  const {_id } = e;
+  return async (dispatch) => {
+    const result = await executeAPIRequest("DELETE", `/event/${_id}`);
+    if (result.status)
+    {
+      dispatch(EventDeletedAction);
+    }
+  }
+}
+
+const EventDeletedAction =  { type: actionTypes.eventDeleted };
 
 /* Auth Actions */
 
