@@ -3,6 +3,7 @@ import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { authStartRegisterAction } from "../../actions/actions";
 import { useForm } from "../../hooks/useForm";
+import "./Auth.css";
 
 export const SignupScreen = () => {
   const dispatch = useDispatch();
@@ -33,13 +34,13 @@ export const SignupScreen = () => {
       <div className="container col-xl-10 col-xxl-8 px-4 py-5">
         <div className="row align-items-center g-lg-5 py-5">
           <div className="col-lg-7 text-center text-lg-start">
-            <h1 className="display-4 fw-bold lh-1 mb-4">
+            <h1 className="display-4 fw-bold lh-1 mb-4 home_text">
               {" "}
-              <i className="fas fa-shield-alt fa-lg"></i> Calendar App
+              <i className="fas fa-calendar fa-lg home_text"></i> Calendar App
             </h1>
-            <p className="col-lg-10 fs-4">
-              Welcome to the top Marvel and DC Comics Super Heroes. <br />
-              Let's go and see more details about your favorite hero.
+            <p className="col-lg-10 fs-4 home_text">
+              A scheduling app to stay organized. You can create, edit and
+              delete events in your calendar.
             </p>
           </div>
           <div className="col-md-10 mx-auto col-lg-5">

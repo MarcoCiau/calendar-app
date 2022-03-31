@@ -3,6 +3,7 @@ import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { authStartLoginAction } from "../../actions/actions";
 import { useForm } from "../../hooks/useForm";
+import "./Auth.css";
 
 export const LoginScreen = () => {
   const dispatch = useDispatch();
@@ -28,9 +29,10 @@ export const LoginScreen = () => {
     <div className="text-center container col-md-6 mx-auto col-lg-3">
       <div className=" mt-5 form-signin">
         <form onSubmit={handleOnSubmit}>
-          <i className="fas fa-shield-alt fa-3x mb-3" />
-          <h1 className="h3 mb-3 fw-normal">Welcome Back</h1>
-
+          <div className="home_text">
+            <i className="fas fa-calendar fa-3x mb-3" />
+            <h1 className="h3 mb-3 fw-normal">Welcome Back</h1>
+          </div>
           <div className="form-floating mb-3">
             <input
               type="email"
