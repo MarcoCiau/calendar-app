@@ -36,7 +36,7 @@ export const SignupScreen = () => {
           <div className="col-lg-7 text-center text-lg-start">
             <h1 className="display-4 fw-bold lh-1 mb-4 home_text">
               {" "}
-              <i className="fas fa-calendar fa-lg home_text"></i> Calendar App
+              <i className="fas fa-calendar fa-lg home_text"></i> CalendarIO
             </h1>
             <p className="col-lg-10 fs-4 home_text">
               A scheduling app to stay organized. You can create, edit and
