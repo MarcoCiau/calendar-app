@@ -15,7 +15,7 @@ import "moment/locale/es";
 import "./CalendarScreen.css";
 
 /* Set moment js idiom */
-moment.locale("es");
+moment.locale("en");
 
 /*
  Setup the localizer by providing the moment (or globalize) Object
@@ -106,7 +106,7 @@ export const CalendarScreen = () => {
         events={events}
         startAccessor="start"
         endAccessor="end"
-        messages={messages}
+        //messages={messages}
         selectable={true}
         eventPropGetter={eventStyleGetter}
         components={{
