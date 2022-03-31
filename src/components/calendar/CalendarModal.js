@@ -108,8 +108,6 @@ export const CalendarModal = () => {
     else {
       dispatch(eventStartAddAction(formValues));
     }
-
-    
     setIsAValidTitle(true);
     closeModal();
   };
@@ -120,6 +118,7 @@ export const CalendarModal = () => {
     setStartDate(defaultStartDate.toDate());
     setEndDate(defaultEndDate.toDate());
     setFormValues(defaultEvent);
+    setIsAValidTitle(true);
   }
 
   const onChangeStartDate = (e) => {
@@ -149,11 +148,11 @@ export const CalendarModal = () => {
         className="modal"
         overlayClassName="modal-overlay"
       >
-        <h1> {`${selected ? "Editar evento":"Nuevo evento"}`} </h1>
+        <h1> {`${selected ? "Edit Event":"New Event"}`} </h1>
         <hr />
         <form className="container" onSubmit={formSubmitHandler}>
           <div className="form-group">
-            <label>Fecha y hora inicio</label>
+            <label>Start Datetime</label>
             <DateTimePicker
               onChange={onChangeStartDate}
               value={startDate}
@@ -162,7 +161,7 @@ export const CalendarModal = () => {
           </div>
 
           <div className="form-group">
-            <label>Fecha y hora fin</label>
+            <label>End Datetime</label>
             <DateTimePicker
               onChange={onChangeEndDate}
               value={endDate}
@@ -172,7 +171,7 @@ export const CalendarModal = () => {
 
           <hr />
           <div className="form-group">
-            <label>Titulo y notas</label>
+            <label>Title</label>
             <input
               type="text"
               className={`form-control ${!isAValidTitle && "is-invalid"}`}
@@ -183,11 +182,12 @@ export const CalendarModal = () => {
               onChange={formInputChangeHandler}
             />
             <small id="emailHelp" className="form-text text-muted">
-              Una descripción corta
+              Brief description
             </small>
           </div>
 
           <div className="form-group">
+          <label>Notes</label>
             <textarea
               type="text"
               className="form-control"
@@ -198,13 +198,13 @@ export const CalendarModal = () => {
               onChange={formInputChangeHandler}
             ></textarea>
             <small id="emailHelp" className="form-text text-muted">
-              Información adicional
+              Aditional info
             </small>
           </div>
 
           <button type="submit" className="btn btn-outline-primary btn-block">
             <i className="far fa-save"></i>
-            <span> Guardar</span>
+            <span> Save</span>
           </button>
         </form>
       </Modal>

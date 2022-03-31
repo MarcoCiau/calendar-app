@@ -16,7 +16,7 @@ export const AppRouter = () => {
   }, [dispatch]);
 
   if (checkingLoginState) {
-    return <h5>Espere...</h5>;
+    return <h5>Loading...</h5>;
   }
 
   return (

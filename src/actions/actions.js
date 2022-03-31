@@ -76,12 +76,12 @@ const EventUpdatedAction = (e) => ({
 export const EventStartGetAllAction = (uid = "") => {
   return async (dispatch) => {
     let result = await executeGetRequest(
-      `/event?from=0&limit=54&sort=-1&query={"userId":"${uid}"}`
+      `/event?from=0&limit=54&sort=-1`
     );
     const interceptor = await requestInterceptor(result);
     if (interceptor === false)
       result = await executeGetRequest(
-        `/event?from=0&limit=54&sort=-1&query={"userId":"${uid}"}`
+        `/event?from=0&limit=54&sort=-1}`
       );
     if (result.status) {
       dispatch(EventLoadedAction(result.events));
